@@ -1,0 +1,29 @@
+name: Daily Commit Tracker
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # හැමදාම රෑ 12ට ඔටෝ රන් වෙයි
+  workflow_dispatch: # ඕන වෙලාවක අපිට මැනුවල් රන් කරන්න පුළුවන්
+
+jobs:
+  update-log:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Generate Log
+        run: |
+          DATE=$(date +'%Y-%m-%d')
+          echo "## Statistics for $DATE" > README.md
+          echo "* Repositories scanned: $(curl -s -H "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/users/BhagyaNavodyani | jq '.public_repos')" >> README.md
+          echo "* Total commits today: $(git log --oneline --since="24 hours ago" | wc -l)" >> README.md
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add README.md
+          git commit -m "Add daily activity log for $(date +'%Y-%m-%d')" || exit 0
+          git push
