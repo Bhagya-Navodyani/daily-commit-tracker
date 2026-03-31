@@ -1,18 +1,18 @@
-permissions:
-  contents: write
-  
-  name: Daily Commit Tracker
+name: Daily Commit Tracker
 
 on:
   schedule:
-    - cron: '0 0 * * *' # හැමදාම රෑ 12ට ඔටෝ රන් වෙයි
-  workflow_dispatch: # ඕන වෙලාවක අපිට මැනුවල් රන් කරන්න පුළුවන්
+    - cron: '0 0 * * *'
+  workflow_dispatch: 
+
+permissions:
+  contents: write 
 
 jobs:
   update-log:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 
         with:
           token: ${{ secrets.GH_TOKEN }}
 
