@@ -1,4 +1,7 @@
-name: Daily Commit Tracker
+permissions:
+  contents: write
+  
+  name: Daily Commit Tracker
 
 on:
   schedule:
