@@ -26,7 +26,7 @@ jobs:
       - name: Commit and Push
         run: |
           git config --global user.name "BhagyaNavodyani"
-          git config --global user.email "bhagyanavodyani00@gmail.com"
+          git config --global user.email "bhagyanavodyani000@gmail.com"
           git add README.md
           git commit -m "Add daily activity log for $(date +'%Y-%m-%d')" || exit 0
           git push
